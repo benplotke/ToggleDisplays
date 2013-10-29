@@ -1,0 +1,22 @@
+#!/bin/bash
+# Toggles between laptop and external display devices. Sets laptop screen if external device goes missing.
+
+xStatus=`xrandr`
+connectedOutputs=$(echo "$xStatus" | grep " connected" | sed -e "s/\([A-Z0-9]\+\) connected.*/\1/")
+activeOutput=$(echo "$xStatus" | grep -e " connected [^(]" | sed -e "s/\([A-Z0-9]\+\) connected.*/\1/" | head -n1)
+connectionCount=$(echo $connectedOutputs | wc -w)
+command="xrandr "
+
+if [[ "$connectionCount" -gt 1 ]]; then
+  for display in $connectedOutputs; do
+    if [[ $display = $activeOutput ]]; then
+      command+="--output $display --off "
+    else
+      command+="--output $display --auto "
+    fi
+  done
+else
+  command+="--auto"
+fi
+
+$command
