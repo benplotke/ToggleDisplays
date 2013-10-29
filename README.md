@@ -1,6 +1,6 @@
 ToggleDisplays
 ==============
-This is a bash script for toggling between one of two displays.
+This is a bash script for toggling between one of two displays connected to a linux mechine.
 Behavior
 ========
   2 connected displays, 1 on, 1 off:  	Toggles which is active.
